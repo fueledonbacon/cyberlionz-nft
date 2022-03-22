@@ -44,7 +44,7 @@ export default {
 		],
 		script: [
 			{
-				src: '/Build/webgl.loader.js'
+				src: '/Build/webgl.loader.js',
 			},
 			{
 				src: 'https://identity.netlify.com/v1/netlify-identity-widget.js',
@@ -56,7 +56,7 @@ export default {
 	},
 
 	// Global CSS: https://go.nuxtjs.dev/config-css
-	css: ['aos/dist/aos.css'],
+	css: ['@/assets/css/tailwind.css', 'aos/dist/aos.css'],
 
 	// Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
 	plugins: [
@@ -69,10 +69,7 @@ export default {
 	components: true,
 
 	// Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-	buildModules: [
-		// 'nuxt-vite',
-		'@nuxtjs/tailwindcss'
-	],
+	buildModules: ['@nuxtjs/tailwindcss'],
 
 	// Modules: https://go.nuxtjs.dev/config-modules
 	modules: [
@@ -115,5 +112,14 @@ export default {
 	},
 
 	// Build Configuration: https://go.nuxtjs.dev/config-build
-	build: {},
+	build: {
+		postcss: {
+			plugins: {
+				tailwindcss: {},
+			},
+			preset: {
+				autoprefixer: {},
+			},
+		},
+	},
 }

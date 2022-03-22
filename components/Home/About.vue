@@ -3,14 +3,7 @@
 	<section class="relative bg-lionz-light-brown" id="about-section">
 		<div class="max-w-2xl lg:max-w-7xl px-12 mx-auto">
 			<div
-				class="
-					flex
-					justify-center
-					lg:flex-row
-					flex-col-reverse
-					items-center
-				">
-
+				class="flex justify-center lg:flex-row flex-col-reverse items-center">
 				<div
 					class="w-full lg:w-1/2 mb-16 ml-0 sm:px-5 sm:pl-8 xl:pl-20 lg:mb-0">
 					<div class="relative">
@@ -47,16 +40,54 @@
 
 				<!-- CUB RIGHT -->
 				<div class="w-full lg:w-1/2 lg:px-0 mb-16 hidden w-96 mb-0 lg:block">
-					<div class="w-full h-full px-20 rounded-2xl ">
-						<img
+					<div class="w-full h-full px-20 rounded-2xl">
+						<!-- <img
 							data-aos="fade-in"
 							src="@/assets/images/lion-cub-idle-m.gif"
-							alt="Lion Cub Artist" />
+							alt="Lion Cub Artist" /> -->
+						<Carousel
+							:items="carouselItems"
+							:haveNextPrevButtons="true"
+							:changeSlideTimeout="0"></Carousel>
 					</div>
 				</div>
-
-				
 			</div>
 		</div>
 	</section>
 </template>
+
+<script>
+import cub from '@/assets/images/lion-cub-idle-m.gif'
+import carouselSample1 from '@/assets/images/carousel-sample1.gif'
+import carouselSample2 from '@/assets/images/carousel-sample2.gif'
+import carouselSample3 from '@/assets/images/carousel-sample3.gif'
+import carouselSample4 from '@/assets/images/carousel-sample4.gif'
+import carouselSample5 from '@/assets/images/carousel-sample5.gif'
+
+export default {
+	data() {
+		return {
+			carouselItems: [
+				{
+					src: cub,
+				},
+				{
+					src: carouselSample1,
+				},
+				{
+					src: carouselSample2,
+				},
+				{
+					src: carouselSample3,
+				},
+				{
+					src: carouselSample4,
+				},
+				{
+					src: carouselSample5,
+				},
+			],
+		}
+	},
+}
+</script>
