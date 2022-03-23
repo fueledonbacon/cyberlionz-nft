@@ -223,7 +223,6 @@ export default {
 			const responseData = await this.$axios.$get(
 				'https://enigmafactorygames.com/cyberlionz/scores/TopScoresAllJSON.php?unique=1&latest=0'
 			)
-			console.log(responseData)
 
 			const scoreBoard = responseData
 
