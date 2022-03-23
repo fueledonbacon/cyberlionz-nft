@@ -12,7 +12,8 @@
 		<div class="flex justify-center">
 			<div class="max-w-2xl">
 				<p class="leading-loose text-lionz-yellow mb-5 text-shadow-xl">
-					Play the first of many metajungle games and experiences right now, right here!
+					Play the first of many metajungle games and experiences right now,
+					right here!
 				</p>
 			</div>
 		</div>
@@ -58,6 +59,86 @@
 					@click="setFullscreen" />
 			</div>
 		</div>
+
+		<div class="w-full flex items-center justify-center py-12">
+			<label
+				for="score-modal"
+				class="
+					btn
+					modal-button
+					bg-orange-400
+					hover:bg-orange-300
+					text-lionz-accent
+				"
+				>Check Scores</label
+			>
+
+			<!-- Put this part before </body> tag -->
+			<input type="checkbox" id="score-modal" class="modal-toggle" />
+			<label for="score-modal" class="modal cursor-pointer">
+				<label
+					class="
+						modal-box
+						max-w-fit
+						relative
+						bg-lionz-light-brown
+						text-lionz-accent
+					"
+					for="">
+					<div
+						class="
+							tabs
+							flex
+							items-center
+							justify-center
+							!border-lionz-light-brown
+						">
+						<button
+							v-for="(game, index) in games"
+							class="tab tab-xs tab-bordered text-lionz-accent"
+							:class="{
+								'tab-active': game.isSelected,
+								'!border-lionz-accent': game.isSelected,
+							}"
+							@click="selectGame(index)">
+							{{ game.name }}
+						</button>
+					</div>
+					<div class="overflow-x-auto">
+						<table class="table table-compact w-full">
+							<thead>
+								<tr>
+									<th class="bg-transparent">Name</th>
+									<th class="bg-transparent">Score</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr v-for="(score, index) in selectedGame.scores">
+									<td
+										:class="{
+											'bg-transparent': index > 2,
+											'bg-amber-700': index === 0,
+											'bg-amber-600': index === 1,
+											'bg-amber-500': index === 2,
+										}">
+										{{ score.name }}
+									</td>
+									<td
+										:class="{
+											'bg-transparent': index > 2,
+											'bg-amber-700': index === 0,
+											'bg-amber-600': index === 1,
+											'bg-amber-500': index === 2,
+										}">
+										{{ score.score }}
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</label>
+			</label>
+		</div>
 	</section>
 </template>
 
@@ -70,6 +151,7 @@ export default {
 			canvasHeight: 600,
 			progressBarPercent: '0%',
 			unityInstance: {},
+			games: [],
 		}
 	},
 	mounted() {
@@ -129,10 +211,49 @@ export default {
 				console.log(err)
 			}
 		})
+
+		this.fetchScores()
 	},
 	methods: {
 		setFullscreen() {
 			this.unityInstance.SetFullscreen(1)
+		},
+
+		async fetchScores() {
+			const responseData = await this.$axios.$get(
+				'https://enigmafactorygames.com/cyberlionz/scores/TopScoresAllJSON.php?unique=1&latest=0'
+			)
+			console.log(responseData)
+
+			const scoreBoard = responseData
+
+			if (scoreBoard.games) {
+				this.games = scoreBoard.games.map((game, index) => {
+					return {
+						...game,
+						isSelected: index === 0,
+					}
+				})
+			}
+		},
+
+		selectGame(index) {
+			this.games = this.games.map((game, gameIndex) => {
+				return {
+					...game,
+					isSelected: gameIndex === index,
+				}
+			})
+		},
+	},
+	computed: {
+		selectedGame() {
+			if (this.games.length > 0) {
+				return this.games.filter((game) => game.isSelected).pop()
+			}
+			return {
+				scores: [],
+			}
 		},
 	},
 }
