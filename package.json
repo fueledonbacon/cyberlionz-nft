@@ -7,7 +7,7 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate --fail-on-error",
-    "deploy:cl": "npx hardhat run scripts/deploy-cl-staking.ts"
+    "deploy:cl": "npx hardhat run scripts/deploy.ts"
   },
   "dependencies": {
     "@metamask/onboarding": "^1.0.1",
