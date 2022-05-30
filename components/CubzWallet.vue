@@ -419,33 +419,35 @@ export default {
 				const new_id = this.$wallet.nfts[this.dropId1].name.split('#')[1]
 				const old_id = this.$wallet.nfts[this.dropId2].name.split('#')[1]
 
-				await this.$wallet.burnHeat()
+				if (await this.$wallet.burnHeat()) {
+					this.$wallet.evolving = 'evolving...'
 
-				this.$wallet.evolving = 'evolving...'
+					await axios.get(`/.netlify/functions/evolve`, {
+						params: {
+							oldName: this.filename,
+							newName: this.$wallet.nfts[this.dropId1].name.split('#')[1],
+							traits,
+						},
+					})
 
-				await axios.get(`/.netlify/functions/evolve`, {
-					params: {
-						oldName: this.filename,
-						newName: this.$wallet.nfts[this.dropId1].name.split('#')[1],
-						traits,
-					},
-				})
+					this.$wallet.evolving = 'burning...'
 
-				this.$wallet.evolving = 'burning...'
+					await this.$wallet.burn(parseInt(old_id))
+					;[this.dropId1, this.dropId2, this.previewImage] = [
+						undefined,
+						undefined,
+						undefined,
+					]
 
-				await this.$wallet.burn(parseInt(old_id))
-				;[this.dropId1, this.dropId2, this.previewImage] = [
-					undefined,
-					undefined,
-					undefined,
-				]
-
-				this.$wallet.evolving = 'reloading...'
-				setTimeout(async () => {
-					this.curTime = new Date().getTime()
-					this.$wallet.nfts = await this.$wallet.getNfts(this.$wallet.account)
+					this.$wallet.evolving = 'reloading...'
+					setTimeout(async () => {
+						this.curTime = new Date().getTime()
+						this.$wallet.nfts = await this.$wallet.getNfts(this.$wallet.account)
+						this.$wallet.evolving = ''
+					}, 20000)
+				} else {
 					this.$wallet.evolving = ''
-				}, 20000)
+				}
 			}
 		},
 	},

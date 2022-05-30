@@ -93,11 +93,10 @@ export default async ({ $config, store }, inject) => {
 						},
 						headers: {
 							'x-api-key': moralisApiKey,
-							'Cache-Control': 'no-cache' 
+							'Cache-Control': 'no-cache',
 						},
 					}
 				)
-
 				let results = [],
 					i = 0
 				for (let nft of res.data.result) {
@@ -138,12 +137,17 @@ export default async ({ $config, store }, inject) => {
 			try {
 				this.evolving = 'Confirming your $HEAT...'
 				const tx_burn = await heatContract.burn(
-					ethers.utils.parseEther(evolvingHeat)
+					ethers.utils.parseEther(evolvingHeat),
+					{
+						gasLimit: 250000,
+					}
 				)
 				this.evolving = 'Burning your $HEAT...'
 				await tx_burn.wait()
+				return true
 			} catch (err) {
 				console.log(err)
+				return false
 			}
 		},
 
