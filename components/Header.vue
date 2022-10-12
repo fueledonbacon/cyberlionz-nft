@@ -63,6 +63,8 @@
 						>Evolve</a
 					>
 
+
+				<!-- 
 					<a
 						href="#roadmap-section"
 						class="mr-5 font-medium leading-6 text-lionz-accent hover:text-gray-900"
@@ -79,7 +81,10 @@
 						class="mr-5 font-medium leading-6 text-lionz-accent hover:text-gray-900"
 						>FAQ</a
 					>
+				-->
 				</nav>
+
+				
 				<!-- <nav class="md:flex items-center mb-5 text-sm md:mb-0 md:pl-10"> -->
 				<!--	<a
 						href="/#"

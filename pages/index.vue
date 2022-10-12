@@ -8,9 +8,9 @@
 			<HomeCarousel />
 			<HomeAbout2 />
 			<Game />
-			<HomeRoadmap />
-			<HomeTeam />
-			<HomeFaq />
+			<!--<HomeRoadmap /> -->
+			<!--<HomeTeam /> -->
+			<!--<HomeFaq /> -->
 			<Footer />
 		</main>
 	</div>
