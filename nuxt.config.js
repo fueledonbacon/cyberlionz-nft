@@ -96,6 +96,7 @@ export default {
 	buildModules: [
 		// 'nuxt-vite',
 		'@nuxtjs/tailwindcss',
+		'@nuxt/postcss8',
 	],
 
 	// Modules: https://go.nuxtjs.dev/config-modules
@@ -142,6 +143,12 @@ export default {
 	// Build Configuration: https://go.nuxtjs.dev/config-build
 	build: {
 		transpile: ['web3modal-vue'],
+		postcss: {
+			plugins: {
+			  tailwindcss: {},
+			  autoprefixer: {},
+			},
+		  },
 	},
 
 	// axios: {
